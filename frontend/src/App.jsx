@@ -211,10 +211,7 @@ function App() {
         </div>
       </section>
 
-      {/* —— Footer —— */}
-      <footer className="site-footer">
-        LectureFind — Built with FastAPI, React, NLTK & youtube-transcript-api · 2026
-      </footer>
+
     </>
   );
 }
