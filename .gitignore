@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+backend/nltk_data/
+backend/api_code.py
+*.egg-info/
+.env
+
+# Node
+node_modules/
+dist/
+.vite/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
