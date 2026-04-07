@@ -37,20 +37,27 @@ LectureFind is a tool (website + Chrome extension) that lets you search for spec
 
 The project has three components that work together:
 
-```
-┌────────────────────┐       POST /analyze       ┌──────────────────────┐
-│   React Website    │ ──────────────────────────►│   FastAPI Backend    │
-│   (localhost:5173)  │◄─────────────────────────── │   (localhost:8000)   │
-└────────────────────┘       JSON response        │                      │
-                                                   │  ┌────────────────┐ │
-┌────────────────────┐       POST /analyze        │  │ YouTube        │ │
-│  Chrome Extension  │ ──────────────────────────►│  │ Transcript API │ │
-│  (popup in browser)│◄──────────────────────────── │  └────────────────┘ │
-└────────────────────┘       JSON response        │  ┌────────────────┐ │
-                                                   │  │ NLTK WordNet   │ │
-                                                   │  │ (NLP Engine)   │ │
-                                                   │  └────────────────┘ │
-                                                   └──────────────────────┘
+```mermaid
+graph LR
+    subgraph Clients
+        Web[React Website<br/>localhost:5173]
+        Ext[Chrome Extension<br/>browser popup]
+    end
+
+    subgraph Backend[FastAPI Backend - localhost:8000]
+        API[API Router]
+        YT[YouTube Transcript API]
+        NLP[NLTK WordNet Engine]
+        
+        API --> YT
+        API --> NLP
+    end
+
+    Web -- POST /analyze --> API
+    API -- JSON Response --> Web
+    
+    Ext -- POST /analyze --> API
+    API -- JSON Response --> Ext
 ```
 
 - **Frontend (React + Vite):** The web interface where users paste a YouTube URL and a concept. Results are displayed as time-range cards with "Go to Clip" buttons.
@@ -373,17 +380,3 @@ You can adjust these values in `backend/main.py`:
 - Make sure you selected the `extension/` folder (not the project root) when loading unpacked.
 - Check for errors on `chrome://extensions` — the extension card will show a red "Errors" button if something is wrong.
 
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/my-feature`).
-3. Commit your changes.
-4. Push to the branch and open a Pull Request.
-
----
-
-## License
-
-This project is for academic/educational purposes.
